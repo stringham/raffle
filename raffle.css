@@ -1,0 +1,79 @@
+.ticket {
+	font-family: "Verdana";
+	display:inline-block;
+	border:solid 1px grey;
+	font-size: 80px;
+	padding:3px;
+	margin:2px;
+	/*background: #9fd4d4;*/
+	-webkit-border-radius: 16px;
+	border-radius: 16px; 
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
+	cursor: pointer;
+
+	-webkit-box-shadow: 0px 0px 6px 0px #000;
+    box-shadow: 0px 0px 6px 0px #000;
+
+    -webkit-user-select: none;
+    -moz-user-select:none;
+    -khtml-user-select:none;
+}
+
+/*.ticket:hover {
+	background: palegreen;
+}*/
+
+.input{
+	width:300px;
+	height: 115px;
+	margin: 50px auto;
+
+	-webkit-border-radius: 16px;
+	border-radius: 16px; 
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
+
+	-webkit-box-shadow: 0px 0px 6px 0px #000;
+    box-shadow: 0px 0px 6px 0px #000;
+}
+
+.enter-names{
+	width:500px;
+	margin: 10px auto;
+}
+
+textarea {
+	margin: 10px auto;
+	resize:none;
+	height:300px;
+	width:500px;
+	overflow: hidden;
+}
+
+.load {
+	border:1px solid grey;
+	width:60px;
+	font-size: 20px;
+	text-align: center;
+	margin: 0 auto;
+	background: #9fd4d4;
+	-webkit-border-radius: 16px;
+	border-radius: 16px; 
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
+	cursor: pointer;
+
+	-webkit-user-select: none;
+    -moz-user-select:none;
+    -khtml-user-select:none;
+}
+
+.load:hover{
+	background: palegreen;
+}
+
+.loading{
+	width:675px;
+	text-align: center;
+	margin:50px auto;
+	color:rgba(255,255,255,.5);
+	font-size: 200px;
+}
