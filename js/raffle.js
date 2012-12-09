@@ -23,7 +23,8 @@ function process(){
 	var names = $('.name-text-field').val().split('\n');
 	imported = [];
 	map(names, function(name){
-		imported.push({'name':name});
+		if(name.length>0)
+			imported.push({'name':name});
 	});
 	$('.enter-names').hide(500, function(){
 		makeTicketsWithPoints();
