@@ -1,3 +1,10 @@
+/**
+ * Raffle
+ * 2012
+ * https://github.com/stringham/raffle
+ * Copyright Ryan Stringham
+ */
+
 //set the colors for each life, in HEX
 var colors = ["", "#9fd4d4","#222288","#882222","#228822","#FFA500","#FFFF00","#222222"];
 

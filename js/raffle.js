@@ -1,3 +1,10 @@
+/**
+ * Raffle
+ * 2012
+ * https://github.com/stringham/raffle
+ * Copyright Ryan Stringham
+ */
+
 var inProgress = false;
 var size = 60;
 function map(a, f){
