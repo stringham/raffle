@@ -3,6 +3,8 @@ Raffle
 
 HTML and Javascript Raffle System
 
+Demo <a href='http://stringham.me/raffle'>here</a>.
+
 How To Use
 -----------
 
