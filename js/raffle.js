@@ -39,8 +39,9 @@ function process(){
 }
 
 $(document).ready(function(){
-	if(imported && imported.length > 0){
-		$('.loading').hide();
+	if(imported && imported.length > 0) {
+		$('.enter-names').hide();
+
 		makeTicketsWithPoints();
 	}
 });
@@ -89,14 +90,18 @@ function Ticket(name, points){
 		var me = this;
 		this.points--;
 		if(this.points == 0){
-			this.dom.hide('puff', {}, length == 2 ? 1000 : 3000/length, function(){
+			var directions = ['up', 'down', 'left', 'right'];
+			this.dom.css({'background-color':'#ff6600'}).hide('drop', {direction:directions[length%directions.length]}, length <= 5 ? 2000 : 3000/length, function(){
 				callback();
 			});
 		}
 		else{
-			$(this.dom).animate({'backgroundColor':colors.length > me.points ? colors[me.points] : "rgb(" + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")"}, length == 2 ? 1000 : 6000/length, function(){
+			this.dom.css({
+				'background-color':colors.length > me.points ? colors[me.points] : "rgb(" + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")"
+			})
+			setTimeout(function() {
 				callback();
-			});
+			}, length == 2 ? 1000 : 3000/length);
 		}
 	}
 }
@@ -119,7 +124,8 @@ var makeTicketsWithPoints = function(){
 		size--;
 		$('.ticket').css('font-size', size + 'px');
 	}
-	// tickets.reverse();
+
+	$('#participant-number').text(tickets.length);
 	setTimeout(function() {
 		map(tickets, function(ticket){
 			ticket.fixPosition();
@@ -141,7 +147,7 @@ var getChoices = function(){
 
 $(window).resize(function(){
 	if(!inProgress)
-		makeTickets(tickets);
+		makeTicketsWithPoints(tickets);
 });
 
 
