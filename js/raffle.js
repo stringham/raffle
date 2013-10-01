@@ -26,12 +26,17 @@ function shuffle(array) {
   return array;
 }
 
+function getNames() {
+	return $('.name-text-field').val().split('\n').filter(function(name) {
+		return name;
+	});
+}
+
 function process(){
 	var names = $('.name-text-field').val().split('\n');
 	imported = [];
-	map(names, function(name){
-		if(name.length>0)
-			imported.push({'name':name});
+	map(getNames(), function(name){
+		imported.push({'name':name});
 	});
 	$('.enter-names').hide(500, function(){
 		makeTicketsWithPoints();
@@ -44,6 +49,10 @@ $(document).ready(function(){
 
 		makeTicketsWithPoints();
 	}
+
+	$('.name-text-field').on('input', function() {
+		$('#participant-number').text(getNames().length || '');
+	});
 });
 var ticketNames;
 var ticketPoints;
@@ -82,8 +91,6 @@ function Ticket(name, points){
 			'top': me.dom.offset().top,
 			'left':me.dom.offset().left,
 			'background': colors.length > me.points ? colors[me.points] : "rgb(" + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")" 
-		}).click(function(){
-			pickName();
 		});
 	};
 	this.decrement = function(length, callback){
@@ -94,6 +101,7 @@ function Ticket(name, points){
 			this.dom.css({'background-color':'#ff6600'}).hide('drop', {direction:directions[length%directions.length]}, length <= 5 ? 2000 : 3000/length, function(){
 				callback();
 			});
+			$('#participant-number').text(length - 1 + '/' + tickets.length);
 		}
 		else{
 			this.dom.css({
@@ -125,12 +133,14 @@ var makeTicketsWithPoints = function(){
 		$('.ticket').css('font-size', size + 'px');
 	}
 
-	$('#participant-number').text(tickets.length);
+	$('#participant-number').css('width', '').text(tickets.length);
 	setTimeout(function() {
 		map(tickets, function(ticket){
 			ticket.fixPosition();
 		});
 		$('body').unbind('click').click(function(){
+			var width = $('#participant-number').text(tickets.length + '/' + tickets.length).width();
+			$('#participant-number').css('width', width + 'px'); //keep position consistent during countdown
 			pickName();
 		});
 	}, 500);
