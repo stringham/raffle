@@ -5,6 +5,11 @@ body {
    	overflow: hidden;
 }
 
+#participant-number{
+	display: inline-block;
+	text-align: right;
+}
+
 .quote{
 	-webkit-border-radius: 6px;
 	border-radius: 6px; 
