@@ -32,6 +32,10 @@ function getNames() {
 	});
 }
 
+function getWinners() {
+	return parseInt(window.location.hash.substring(1)) || 1;
+}
+
 function process(){
 	var names = $('.name-text-field').val().split('\n');
 	imported = [];
@@ -167,28 +171,39 @@ var pickName = function(){
 	$('body').unbind('click');
 	
 	var choices = getChoices();
-	if(choices.length > 1){
+	if(choices.length > getWinners()){
 		var remove = Math.floor(Math.random()*choices.length);
 		choices[remove].decrement(choices.length, function(){
 			pickName();
 		});
 	}
 	else{
-		choices = $(choices[0].dom);
-		var top = choices.css('top');
-		var left = choices.css('left');
-		var fontsize = choices.css('font-size');
-		var width = choices.width();
-		choices.click(function(){
-			inProgress = false;
-			choices.animate({'font-size':fontsize,'top':top,'left':left},'slow');
-			$('.ticket').show(500).unbind('click');
-			setTimeout(function(){
-				makeTicketsWithPoints(ticketNames, ticketPoints);
-			}, 700);
-		});
-		choices.animate({'font-size':3*size +'px','top':(window.innerHeight/5) + 'px','left':(window.innerWidth/2 - width) + 'px'},1500, function(){
-			choices.animate({'left':(window.innerWidth/2 - choices.width()/2) + 'px'}, 'slow');
-		});
+		if (getWinners() == 1) {
+			choices = $(choices[0].dom);
+			var top = choices.css('top');
+			var left = choices.css('left');
+			var fontsize = choices.css('font-size');
+			var width = choices.width();
+			choices.click(function(){
+				inProgress = false;
+				choices.animate({'font-size':fontsize,'top':top,'left':left},'slow');
+				$('.ticket').show(500).unbind('click');
+				setTimeout(function(){
+					makeTicketsWithPoints(ticketNames, ticketPoints);
+				}, 700);
+			});
+			choices.animate({'font-size':3*size +'px','top':(window.innerHeight/5) + 'px','left':(window.innerWidth/2 - width) + 'px'},1500, function(){
+				choices.animate({'left':(window.innerWidth/2 - choices.width()/2) + 'px'}, 'slow');
+			});
+		} else {
+			$(".ticket").click(function(){
+				inProgress = false;
+				// choices.animate({'font-size':fontsize,'top':top,'left':left},'slow');
+				$('.ticket').show(500).unbind('click');
+				setTimeout(function(){
+					makeTicketsWithPoints(ticketNames, ticketPoints);
+				}, 700);
+			});
+		}
 	}
 }
