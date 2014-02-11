@@ -28,7 +28,7 @@ function shuffle(array) {
 
 function getNames() {
 	return $('.name-text-field').val().split('\n').filter(function(name) {
-		return name;
+		return name.trim();
 	});
 }
 
