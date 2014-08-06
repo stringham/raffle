@@ -13,25 +13,24 @@ var colors = ["#ABC8E4","#628CB6","#003366","#001948","#001948","#001948","#0019
  * the text field, you can define them here. There is an option to give names
  * points, if you don't then it defaults to one point.
  */
-var imported = false;
-// var imported = [
-// {
-// 	name:'Fred',
-// 	points:2
-// },{
-// 	name:'Dallin',
-// 	points:3
-// },{
-// 	name:'Ryan'
-// },{
-// 	name:'Paul'
-// },{
-// 	name:'Wade'
-// },{
-// 	name:'Kesler'
-// },{
-// 	name:'Brett'
-// },{
-// 	name:'Tyler'
-// }
-// ];
+// var imported = false;
+var imported = [
+{
+	name:'Wade',
+},{
+	name:'Dallin',
+	points:2
+},{
+	name:'Ryan'
+},{
+	name:'Paul'
+},{
+	name:'Wade'
+},{
+	name:'Kesler'
+},{
+	name:'Brett'
+},{
+	name:'Tyler'
+}
+];
