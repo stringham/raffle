@@ -44,6 +44,6 @@ Get the spreadsheet key, which is after the /d/ in the url. In the example form 
 	
 Put that key in the query string of the raffle page as the key, for example:
 
-<a href="http://stringham.me/raffle?key=1yCcGRUa6Q4vJN9MCleEozuJvADHMb8AXnHwm3o8ZdQ0">https://stringham.me/raffle?key=1yCcGRUa6Q4vJN9MCleEozuJvADHMb8AXnHwm3o8ZdQ0</a>
+<a href="http://stringham.me/raffle?key=1yCcGRUa6Q4vJN9MCleEozuJvADHMb8AXnHwm3o8ZdQ0">http://stringham.me/raffle?key=1yCcGRUa6Q4vJN9MCleEozuJvADHMb8AXnHwm3o8ZdQ0</a>
 
 Whenever someone submits to the form they will be automatically added to the raffle when the page is loaded. Awesome.
