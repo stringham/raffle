@@ -116,10 +116,21 @@ function Ticket(name, points){
 
 var tickets = [];
 
+var removeDuplicateNames = function(data){
+	var seen = {};
+	return data.filter(function(d){
+		if(seen[d.name.toLowerCase()]){
+			return false;
+		}
+		seen[d.name.toLowerCase()] = true;
+		return true;
+	});
+}
+
 var makeTicketsWithPoints = function(){
 	tickets = [];
 	$('.ticket').remove();
-	map(imported, function(tdata){
+	map(removeDuplicateNames(imported), function(tdata){
 		var t = new Ticket(tdata.name, tdata.points);
 		if(t.points > 0)
 			t.dom.appendTo($('body'));
