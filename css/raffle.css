@@ -49,6 +49,14 @@ textarea {
 	overflow: hidden;
 }
 
+input[type="checkbox"] {
+	margin: 5px none;
+}
+
+button {
+	float: right;
+}
+
 .load {
 	border:1px solid grey;
 	width:60px;

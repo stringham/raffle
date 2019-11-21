@@ -54,8 +54,6 @@ $(document).ready(function(){
 		$('#participant-number').text(getNames().length || '');
 	});
 });
-var ticketNames;
-var ticketPoints;
 
 function elementInViewport(el) {
   var top = el.offsetTop;
@@ -77,6 +75,16 @@ function elementInViewport(el) {
   );
 }
 
+function remainingParticipants() {
+	var participants = 0;
+	for (var ticket of tickets) {
+		if (ticket.points > 0) {
+			participants++;
+		}
+	}
+	return participants;
+}
+
 function Ticket(name, points){
 	this.name = name;
 	if(typeof(points) == "number")
@@ -90,7 +98,7 @@ function Ticket(name, points){
 			'position':'absolute',
 			'top': me.dom.offset().top,
 			'left':me.dom.offset().left,
-			'background': colors.length > me.points ? colors[me.points] : "rgb(" + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")" 
+			'background': getColor(me.points),
 		});
 	};
 	this.decrement = function(length, callback){
@@ -101,11 +109,11 @@ function Ticket(name, points){
 			this.dom.css({'background-color':colors[0]}).hide('drop', {direction:directions[length%directions.length]}, length <= 3 ? 750 : 3000/length, function(){
 				callback();
 			});
-			$('#participant-number').text(length - 1 + '/' + tickets.length);
+			$('#participant-number').text(remainingParticipants() + '/' + tickets.length);
 		}
 		else{
 			this.dom.css({
-				'background-color':colors.length > me.points ? colors[me.points] : "rgb(" + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + "," + Math.floor(Math.random()*256) + ")"
+				'background-color': getColor(me.points),
 			})
 			setTimeout(function() {
 				callback();
@@ -115,6 +123,11 @@ function Ticket(name, points){
 }
 
 var tickets = [];
+var removeWinners = true;
+
+function toggleRemoveWinners() {
+	removeWinners = !removeWinners;
+}
 
 var removeDuplicateNames = function(data){
 	var seen = {};
@@ -127,14 +140,38 @@ var removeDuplicateNames = function(data){
 	});
 }
 
+function standardizedImported() {
+	var namePoints = {};
+	for (var entry of imported) {
+		var points = (entry.points === undefined ? 1 : entry.points);
+		if (entry.name in namePoints) {
+			namePoints[entry.name] += points;
+		} else {
+			namePoints[entry.name] = points;
+		}
+	}
+	imported = [];
+	for (var name in namePoints) {
+		imported.push({name: name, points: namePoints[name]});
+	}
+	return imported;
+}
+
 var makeTicketsWithPoints = function(){
+	standardizedImported();
+
 	tickets = [];
 	$('.ticket').remove();
+
 	map(removeDuplicateNames(imported), function(tdata){
-		var t = new Ticket(tdata.name, tdata.points);
-		if(t.points > 0)
+		if (tdata.points === undefined) {
+			tdata.points = 1;
+		}
+		if (tdata.points > 0) {
+			var t = new Ticket(tdata.name, tdata.points);
 			t.dom.appendTo($('body'));
-		tickets.push(t);
+			tickets.push(t);
+		}
 	});
 	tickets.reverse();
 	size = 40;
@@ -160,7 +197,7 @@ var makeTicketsWithPoints = function(){
 var getChoices = function(){
 	var result = [];
 	map(tickets, function(ticket){
-		if(ticket.points > 0)
+		for (var i = 0; i < ticket.points; i++)
 			result.push(ticket)
 	});
 	return result;
@@ -171,6 +208,9 @@ $(window).resize(function(){
 		makeTicketsWithPoints(tickets);
 });
 
+function randomInt(max) {
+	return Math.floor(Math.random() * max);
+}
 
 var pickName = function(){
 	inProgress = true;
@@ -178,13 +218,20 @@ var pickName = function(){
 	$('body').unbind('click');
 	
 	var choices = getChoices();
-	if(choices.length > 1){
-		var remove = Math.floor(Math.random()*choices.length);
+	if(remainingParticipants() > 1){
+		var remove = randomInt(choices.length);
 		choices[remove].decrement(choices.length, function(){
 			pickName();
 		});
-	}
-	else{
+	} else {
+		if (removeWinners) {
+			var winner = choices[0].name;
+			for (var entry of imported) {
+				if (entry.name == winner) {
+					entry.points--;
+				}
+			}
+		}
 		choices = $(choices[0].dom);
 		var top = choices.css('top');
 		var left = choices.css('left');
@@ -195,7 +242,7 @@ var pickName = function(){
 			choices.animate({'font-size':fontsize,'top':top,'left':left},'slow');
 			$('.ticket').show(500).unbind('click');
 			setTimeout(function(){
-				makeTicketsWithPoints(ticketNames, ticketPoints);
+				makeTicketsWithPoints();
 			}, 700);
 		});
 		choices.animate({'font-size':3*size +'px','top':(window.innerHeight/5) + 'px','left':(window.innerWidth/2 - width) + 'px'},1500, function(){
