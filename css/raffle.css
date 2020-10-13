@@ -49,8 +49,8 @@ textarea {
 	overflow: hidden;
 }
 
-input[type="checkbox"] {
-	margin: 5px none;
+input[type="checkbox"], input[type="number"] {
+	margin: 0 10px 10px 0;
 }
 
 button {
