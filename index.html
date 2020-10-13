@@ -13,9 +13,10 @@
 		<span>Participants:<b id="participant-number"></b></span>
 	</div>
 	<div class='enter-names'>
-		<p>Enter names separated by new lines:</p>
+		<p>Enter names separated by newlines:</p>
 		<textarea class='name-text-field'></textarea>
-		<input id="remove-winners-input" type="checkbox" onclick="toggleRemoveWinners();" checked="checked"/><label for="remove-winners-input">Remove winners after drawing</label>
+        <div><input id="remove-winners-input" type="checkbox" onclick="toggleRemoveWinners();" checked="checked"/><label for="remove-winners-input">Remove winners after drawing</label></div>
+        <div><input id="number-of-winners-input" type="number" value="1" min="1" max="999" required/><label for="number-of-winners-input">Number of winners per drawing</label></div>
 		<button onclick="process();">Import</button>
 	</div>
 </body>
